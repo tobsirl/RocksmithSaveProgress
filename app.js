@@ -32,9 +32,10 @@ app.use(bodyParser.json());
 
 //Add routes for progress api
 app.get('/progress',progress.index);
+app.get('/progress/:id',progress.show);
 app.post('/progress',progress.create);
-app.put('/progress:id',progress.update);
-app.delete('/progress:id',progress.delete);
+app.put('/progress/:id',progress.update);
+app.delete('/progress/:id',progress.delete);
 
 //add route for the root
 

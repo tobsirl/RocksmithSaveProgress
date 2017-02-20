@@ -14,7 +14,22 @@ exports.index = function(req, res) {
   });
 }
 
-// Creates a new Song Progress in datastore.
+//show a specific song
+exports.show = function(req, res){
+	var id = req.params.id; // The id of the workout the user wants to look up. 
+  	Songprogress.findById(id, function(err, doc) {
+    if(!err && doc) {
+      res.json(200, doc);
+    } else if(err) {
+      res.json(500, { message: "Error loading Song." + err});
+    } else {
+      res.json(404, { message: "Song not found."});
+    }
+  });
+
+};
+
+// Creates a new Song Progress
 exports.create = function(req, res) {
 	var songname = req.body.songname;
 	var artist = req.body.artist;
