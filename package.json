@@ -1,0 +1,25 @@
+{
+  "name": "rocksmithsaveprogress",
+  "version": "1.0.0",
+  "description": "Saving progress in Rocksmith",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "express": "^4.14.1",
+    "mongoose": "^4.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tobsirl/RocksmithSaveProgress.git"
+  },
+  "author": "Paul Tobin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tobsirl/RocksmithSaveProgress/issues"
+  },
+  "homepage": "https://github.com/tobsirl/RocksmithSaveProgress#readme"
+}
