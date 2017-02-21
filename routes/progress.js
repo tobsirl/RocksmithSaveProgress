@@ -16,7 +16,7 @@ exports.index = function(req, res) {
 
 //show a specific song
 exports.show = function(req, res){
-	var id = req.params.id; // The id of the workout the user wants to look up. 
+	var id = req.params.id; 
   	Songprogress.findById(id, function(err, doc) {
     if(!err && doc) {
       res.json(200, doc);
@@ -58,8 +58,8 @@ exports.create = function(req, res) {
 
     } else if(!err) {
       
-      // User is trying to create a workout with a name that already exists. 
-      res.json(403, {message: "That song already exists, please update instead of create or create a new workout with a different name."}); 
+      // User is trying to create a song with a name that already exists. 
+      res.json(403, {message: "That song already exists, please use update"}); 
 
     } else {
       res.json(500, { message: err});
@@ -72,12 +72,48 @@ exports.create = function(req, res) {
 
 // Update an existing song in database.
 exports.update = function(req, res) {
-	res.json(200, { message: "Put"});
+	var id = req.params.id; 
+  	var songname = req.body.songname;
+  	var artist = req.body.artist;
+  	var difficulty = req.body.difficulty;
+	var speed = req.body.speed;
+
+  	Songprogress.findById(id, function(err, doc) {
+      if(!err && doc) {
+        doc.songName = songname; 
+        doc.artistName = artist; 
+        doc.difficulty = difficulty;
+        doc.speed = speed;
+
+        doc.save(function(err) {
+          if(!err) {
+            res.json(200, {message: "Song updated: " + songname});    
+          } else {
+            res.json(500, {message: "Could not update song. " + err});
+          }  
+        });
+      } else if(!err) {
+        res.json(404, { message: "Could not find song."});
+      } else {
+        res.json(500, { message: "Could not update song." + err});
+      }
+    }); 
+
 };
 
 // delete an existing song in the database.
 exports.delete = function(req, res) {
-	res.json(200, { message: "Delete"});
+	var id = req.params.id; 
+  	Songprogress.findById(id, function(err, doc) {
+    	if(!err && doc) {
+      		doc.remove();
+      		res.json(200, { message: "Song removed."});
+    	} else if(!err) {
+      res.json(404, { message: "Could not find song."});
+    	} else {
+      		res.json(403, {message: "Could not delete song. " + err });
+    }
+  });
 };
 
 
