@@ -2,6 +2,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+//========================================================================
+// Song Progress Schema
+//========================================================================
+
 var songSchema = new Schema({
 	songName: {type: String},
 	artistName: {type: String},

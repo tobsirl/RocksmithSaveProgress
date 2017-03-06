@@ -6,10 +6,14 @@ var bodyParser = require('body-parser');
 var app = express();
 //require mongoose as a module
 var mongoose = require('mongoose');
+//require the config file main.js
+var config = require('./config/main');
 
 
 // Connect to the database
-mongoose.connect('mongodb://toby:99633426@ds157809.mlab.com:57809/rs_saveprogress');
+
+
+mongoose.connect(config.database);
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -19,8 +23,6 @@ db.once('open', function() {
   console.log("We're Connected")
 });
   
-
-	
 
 //configure the express app to parse JSON-formatted body
 app.use(bodyParser.json());
@@ -45,6 +47,6 @@ app.get('/',function (request, response) {
 });
 
 // Listen on port 8000, IP defaults to 127.0.0.1
-app.listen(8000)
+app.listen(config.port)
 // Put a friendly message on the terminal
-console.log("Server running at http://127.0.0.1:8000/");
+console.log("Server running at port " + config.port);
