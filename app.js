@@ -9,10 +9,9 @@ var mongoose = require('mongoose');
 //require the config file main.js
 var config = require('./config/main');
 
-
+//Attempt to clear up the express deprecated messages in the console log
+mongoose.Promise = require('bluebird');
 // Connect to the database
-
-
 mongoose.connect(config.database);
 
 var db = mongoose.connection;
