@@ -6,7 +6,10 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "body-parser": "^1.16.1",
+    "cors": "^2.8.1",
     "express": "^4.14.1",
+    "express-jwt": "^5.1.0",
+    "jwks-rsa": "^1.1.1",
     "mongoose": "^4.8.3"
   },
   "devDependencies": {},
