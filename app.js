@@ -5,9 +5,9 @@ var bodyParser = require('body-parser');
 
 var jwt = require('express-jwt');
 var jwksRsa = require('jwks-rsa');
-var cors = require('cors');
-var jwks = require('jwks-rsa');
-require('dotenv').config();
+//var cors = require('cors');
+//var jwks = require('jwks-rsa');
+//require('dotenv').config();
 //create an express app
 var app = express();
 //require mongoose as a module
@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 var config = require('./config/main');
 
 
-app.use(cors());
+//app.use(cors());
 
 
 
@@ -53,7 +53,7 @@ db.once('open', function() {
 const checkPermissions = function(req, res, next){
   switch(req.path){
     case '/progress':{
-      var permissions = ['index:progress'];
+      var permissions = ['progress:index'];
       for(var i = 0; i < permissions.length; i++){
         if(req.user.scope.includes(permissions[i])){
           next();
@@ -64,7 +64,10 @@ const checkPermissions = function(req, res, next){
       break;
     }
   }
+
+
 }
+
 //enable the use of the checkPermissions middleware
 app.use(checkPermissions);
 
