@@ -1,7 +1,17 @@
 var express = require('express');
 var routes = require('./routes');
+var router = require('./router');
 var progress = require('./routes/progress');
 var bodyParser = require('body-parser');
+var logger = require('morgan');
+var bcrypt = require('bcrypt-nodejs');
+
+var passport = require('passport');
+var passportService = require('./config/passport');
+
+
+var AuthenticationController = require('./controllers/authentication');
+
 //create an express app
 var app = express();
 //require mongoose as a module
@@ -24,13 +34,32 @@ db.once('open', function() {
   
 
 //configure the express app to parse JSON-formatted body
+app.use(bodyParser.urlencoded({ extended: false }));  
 app.use(bodyParser.json());
 
+// Setting up basic middleware for all Express requests
+app.use(logger('dev')); // Log requests to API using morgan
 
+// Enable CORS from client-side
+app.use(function(req, res, next) {  
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+// Middleware to require login/auth
+var requireAuth = passport.authenticate('jwt', { session: false });
+var requireLogin = passport.authenticate('local', { session: false });
 //create routing object
 //var routes = require('./routes/index');
 //app.get('/', routes.index);
-
+const apiRoutes = express.Router();
+var   authRoutes = express.Router();
+apiRoutes.use('/auth', authRoutes);
+authRoutes.post('/login', requireLogin, AuthenticationController.login);
+authRoutes.post('/register', AuthenticationController.register);
 //Add routes for progress api
 app.get('/progress',progress.index);
 app.get('/progress/:id',progress.show);
@@ -49,3 +78,7 @@ app.get('/',function (request, response) {
 app.listen(config.port)
 // Put a friendly message on the terminal
 console.log("Server running at port " + config.port);
+
+// Import routes to be served
+router(app);
+
