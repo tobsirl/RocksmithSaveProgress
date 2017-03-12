@@ -1,11 +1,12 @@
 var express = require('express');
-var routes = require('./routes');
+//var routes = require('./routes');
 var progress = require('./routes/progress');
 var bodyParser = require('body-parser');
 var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var favicon = require('serve-favicon');
 //Security add passport/passport-auth0
 var passport = require('passport');
 var Auth0Strategy = require('passport-auth0');
@@ -38,16 +39,6 @@ var strategy = new Auth0Strategy({
 
 passport.use(strategy);
 
-// This can be used to keep a smaller payload
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
-
-
 // you can use this section to keep a smaller payload
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -66,7 +57,7 @@ mongoose.connect(config.database);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-	
+  
   // we're connected!
   console.log("We're Connected")
 });
@@ -97,6 +88,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/user', user);
+app.use('/progress', progress);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -136,11 +128,11 @@ app.use(function(err, req, res, next) {
 //app.get('/', routes.index);
 
 //Add routes for progress api
-app.get('/progress',progress.index);
-app.get('/progress/:id',progress.show);
-app.post('/progress',progress.create);
-app.put('/progress/:id',progress.update);
-app.delete('/progress/:id',progress.delete);
+//app.get('/progress',progress.index);
+//app.get('/progress/:id',progress.show);
+//app.post('/progress',progress.create);
+//app.put('/progress/:id',progress.update);
+//app.delete('/progress/:id',progress.delete);
 
 //add route for the root
 

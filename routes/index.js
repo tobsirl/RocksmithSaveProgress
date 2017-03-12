@@ -1,14 +1,8 @@
-/*
- * GET home page.
- */
-
-//exports.index = function(req, res){
-//  res.render('index', { title: 'Express' });
-//};
-
 var express = require('express');
 var passport = require('passport');
 var router = express.Router();
+var Songprogress = require('../models/songprogress');
+var bodyParser = require('body-parser');
 
 var env = {
   AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
@@ -36,6 +30,18 @@ router.get('/callback',
   function(req, res) {
     res.redirect(req.session.returnTo || '/user');
   });
+
+router.get('/progress', 
+  function(req, res){
+    Songprogress.find({}), function(err, song){
+      if(!err){
+        res.json(200, { songprogress: song});
+      }else {
+        res.json(500, { message: err});
+    }
+  }
+  
+});
 
 
 module.exports = router;
