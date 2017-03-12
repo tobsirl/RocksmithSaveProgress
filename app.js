@@ -49,17 +49,35 @@ app.use(function(req, res, next) {
   next();
 });
 
-// Middleware to require login/auth
-var requireAuth = passport.authenticate('jwt', { session: false });
-var requireLogin = passport.authenticate('local', { session: false });
+
 //create routing object
 //var routes = require('./routes/index');
 //app.get('/', routes.index);
-const apiRoutes = express.Router();
-var   authRoutes = express.Router();
-apiRoutes.use('/auth', authRoutes);
-authRoutes.post('/login', requireLogin, AuthenticationController.login);
-authRoutes.post('/register', AuthenticationController.register);
+// Middleware to require login/auth
+var requireAuth = passport.authenticate('jwt', { session: false });
+var requireLogin = passport.authenticate('local', { session: false });
+
+module.exports = function(app) {  
+  // Initializing route groups
+  const apiRoutes = express.Router(),
+        authRoutes = express.Router();
+
+  //=========================
+  // Auth Routes
+  //=========================
+
+  // Set auth routes as subgroup/middleware to apiRoutes
+  apiRoutes.use('/auth', authRoutes);
+
+  // Registration route
+  authRoutes.post('/register', AuthenticationController.register);
+
+  // Login route
+  authRoutes.post('/login', requireLogin, AuthenticationController.login);
+
+// Set url for API group routes
+  app.use('/api', apiRoutes);
+};
 //Add routes for progress api
 app.get('/progress',progress.index);
 app.get('/progress/:id',progress.show);
@@ -81,4 +99,5 @@ console.log("Server running at port " + config.port);
 
 // Import routes to be served
 router(app);
+
 
