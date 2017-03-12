@@ -1,5 +1,11 @@
 # RocksmithSaveProgress
 
+### Description
+
+Rocksmith saves Difficulty and Speed globally across all songs
+
+Rocksmith Save Progress allows you to keep track of the last
+settings for both Difficulty and Speed
 
 https://rocksmith.ubisoft.com/rocksmith/en-us/home/
 
@@ -17,6 +23,7 @@ To Run
 - mongoose
 - bodypraser
 - morgan
+- bluebird
 
 ## Services used
 - auth0
