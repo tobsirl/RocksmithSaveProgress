@@ -128,7 +128,7 @@ app.use(function(err, req, res, next) {
 //app.get('/', routes.index);
 
 //Add routes for progress api
-//app.get('/progress',progress.index);
+//app.get('/progress', progress.index);
 //app.get('/progress/:id',progress.show);
 //app.post('/progress',progress.create);
 //app.put('/progress/:id',progress.update);

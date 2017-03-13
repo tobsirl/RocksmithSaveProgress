@@ -43,6 +43,7 @@ router.get('/progress',
   }  
 });
 */
+/*
 router.get('/progress', ensureLoggedIn,
   function(req, res){
     res.json("We are here");
@@ -53,6 +54,17 @@ router.get('/progress', ensureLoggedIn,
         res.json(500, { message: err});
     }
   }  
+  });
+*/
+router.get('/progress', ensureLoggedIn,
+  exports.index = function(req, res) {
+    Songprogress.find({}, function(err, song) {
+      if(!err) {
+        res.json(200, { songprogress: song });  
+      } else {
+        res.json(500, { message: err });
+      }
+    });
   });
 
 
