@@ -31,8 +31,8 @@ exports.show = function(req, res){
 
 // Creates a new Song Progress
 exports.create = function(req, res) {
-	var songname = req.body.songname;
-	var artist = req.body.artist;
+	var songname = req.body.songName;
+	var artist = req.body.artistName;
 	var difficulty = req.body.difficulty;
 	var speed = req.body.speed;
 
@@ -73,8 +73,8 @@ exports.create = function(req, res) {
 // Update an existing song in database.
 exports.update = function(req, res) {
 	var id = req.params.id; 
-  	var songname = req.body.songname;
-  	var artist = req.body.artist;
+  	var songname = req.body.songName;
+  	var artist = req.body.artistName;
   	var difficulty = req.body.difficulty;
 	var speed = req.body.speed;
 
