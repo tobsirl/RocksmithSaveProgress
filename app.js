@@ -2,6 +2,7 @@ var express = require('express');
 var routes = require('./routes');
 var progress = require('./routes/progress');
 var bodyParser = require('body-parser');
+var logger = require('morgan');
 //create an express app
 var app = express();
 //require mongoose as a module
