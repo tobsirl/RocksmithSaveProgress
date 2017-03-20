@@ -26,6 +26,7 @@ db.once('open', function() {
 
 //configure the express app to parse JSON-formatted body
 app.use(bodyParser.json());
+app.use(logger('dev'));
 
 
 //create routing object
